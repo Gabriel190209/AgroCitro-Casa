@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - AgroCitro</title>
+    <link rel="stylesheet" href="login.css">    
+</head>
+<body>
+    <div class="login-container">
+        <h2>Login</h2>
+
+        <div class="form-group">
+            <label for="usuario">Usuário</label>
+            <input type="text" id="usuario" placeholder="Digite seu usuário">
+        </div>
+        <div class="form-group">
+            <label for="senha">Senha</label>
+            <input type="password" id="senha" placeholder="Digite sua senha">
+        </div>
+        <button id="btnLogin" class="btn-primary">Entrar</button>
+        <p class="msg-info">Dica: usuário <b>admin</b> | senha <b>123</b></p>
+    </div>
+
+    <script>
+        document.getElementById('btnLogin').addEventListener('click', async () => {
+            const usuario = document.getElementById('usuario').value;
+            const senha = document.getElementById('senha').value;
+
+            const payload = { usuario, senha };
+
+            try {
+                const response = await fetch('/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (response.ok) {
+                    alert("Login realizado com sucesso!");
+                    window.location.href = "plantio.html";
+                } else {
+                    alert("Usuário ou senha inválidos!");
+                }
+            } catch (error) {
+                alert("Erro ao conectar com servidor.");
+                console.error(error);
+            }
+        });
+    </script>
+</body>
+</html>
